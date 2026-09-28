@@ -1,0 +1,174 @@
+//1//
+
+/1/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main(){
+    int a, b;
+    cin >> a >> b;
+    cout << sqrt(a * a + b * b);
+    return 0;
+}
+
+/3/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main(){
+    int a;
+    cin >> a;
+    cout << ((a % 100) - (a % 10)) / 10;
+    return 0;
+}
+
+/4/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main(){
+    int a;
+    cin >> a;
+    cout << a + (2 - a % 2);
+    return 0;
+}
+
+//2//
+
+/1/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double sq(double x, double y){
+    return sqrt(x * x + y * y);
+}
+
+int main(){
+    double a, b;
+    cin >> a >> b;
+    cout << sq(a, b);
+    return 0;
+}
+
+/3/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int des(int x){
+    return ((x % 100) - (x % 10)) / 10;
+}
+
+int main(){
+    int a;
+    cin >> a;
+    cout << des(a);
+    return 0;
+}
+
+/4/
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int next_ch(int x){
+    return x + (2 - x % 2);
+}
+
+int main(){
+    int a;
+    cin >> a;
+    cout << next_ch(a);
+    return 0;
+}
+
+//3//
+
+/1/
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+int main(){
+    string a, b;
+    ifstream MyReadFile("001.txt");
+    MyReadFile >> a >> b;
+
+    ofstream MyFile("Result.txt");
+    MyFile << sqrt(pow(stoi(a), 2) + pow(stoi(b), 2));
+    MyFile.close();
+}
+
+/3/
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+int main(){
+    string x;
+    ifstream MyReadFile("001.txt");
+    MyReadFile >> x;
+    ofstream MyFile("Result.txt");
+    MyFile << ((stoi(x) % 100) - (stoi(x) % 10)) / 10;
+    MyFile.close();
+}
+
+/4/
+#include <iostream>
+#include <cmath>
+#include <fstream>
+#include <string>
+using namespace std;
+
+
+int main(){
+    string x;
+    ifstream MyReadFile("001.txt");
+    MyReadFile >> x;
+    ofstream MyFile("Result.txt");
+    MyFile << stoi(x) + (2 - stoi(x) % 2);
+    MyFile.close();
+}
+
+//4//
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class math{
+    public:
+    static int next_ch(int x) {
+            return x + (2 - x % 2);
+    }
+    static int des(int x){
+            return ((x % 100) - (x % 10)) / 10;
+    }
+    static double sq(double x, double y){
+            return sqrt(x * x + y * y);
+    }
+};
+
+int main(){
+    int a;
+    double a1, b1;
+    cin >> a;
+    cout << math::next_ch(a) << endl;
+    cout << math::des(a) << endl;
+    cin >> a1 >> b1;
+    cout << math::sq(a1, b1) << endl;
+    return 0;
+}
