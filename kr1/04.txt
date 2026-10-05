@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+int main(){
+    string n; int x, a, b, c, d;
+    cin >> n;
+    //cheking which symbol we got
+    if (n == "M")
+        cout << "Litvak Christina";
+    else if (n == "h"){
+        cin >> a >> b >> c;
+        // c = 0
+        if (a == 0 && b == 0)
+            if (c == 0)
+                cout << "x = R";  
+            else
+                cout << "Решений нет.";
+        // b * x + c = 0
+        else if (a == 0)
+            cout << "x = " << c / b;
+        //a * x * x + b * x + c = 0
+        else {
+            d = b * b - 4 * a * c;
+            if (d < 0)
+                cout << "Решений нет.";
+            else if (d == 0)
+                cout << "x = " << (-b + pow(d, 0.5)) / (2 * a);
+            else{
+                cout << "x1 = " << (-b + pow(d, 0.5)) / (2 * a) << endl;
+                cout << "x2 = " << (-b - pow(d, 0.5)) / (2 * a) << endl;
+            }
+        }
+    }
+    else if (n == "v"){
+        //input of a number 
+        cin >> x;
+        //cheking if the number is divisible by 25 without a remainder
+        cout << (x % 25 == 0);
+    }
+}
