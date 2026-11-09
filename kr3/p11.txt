@@ -1,0 +1,166 @@
+///1///
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<long long>> a(n, vector<long long>(m));
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j)
+            cin >> a[i][j];
+    vector<vector<long long>> dp(n, vector<long long>(m, 0));
+    vector<vector<char>> from(n, vector<char>(m, 0));
+    
+    dp[0][0] = a[0][0];
+    for(int j = 1; j < m; ++j){
+        dp[0][j] = dp[0][j - 1] + a[0][j];
+        from[0][j] = 'l';
+    }
+    for(int i = 1; i < n; ++i){
+        dp[i][0] = dp[i - 1][0] + a[i][0];
+        from[i][0] = 'u';
+    }
+    for (int i = 1; i < n; ++i){
+        for (int j = 1; j < m; ++j){
+            if (dp[i - 1][i] >= dp[i][j - 1]){
+                dp[i][j] = dp[i - 1][j] + a[i][j];
+                from[i][j] = 'u';
+            }else{
+                dp[i][j] = dp[i][j - 1] + a[i][j];
+                from[i][j] = 'l';
+            }
+        }
+    }
+    
+    vector<pair<int, int>> path;
+    int i = n - 1, j = m - 1;
+    while (true){
+        path.push_back({i, j});
+        if (i == 0 and j == 0) break;
+        if (from[i][j] == 'u') --i;
+        else --j;
+    }
+    reverse(path.begin(), path.end());
+    
+    for (auto &p: path)
+        cout << p.first << " " << p.second << endl;
+    
+    return 0;
+}
+
+///2///
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int n, d;
+vector<int> a;
+
+bool ok(int x) {
+    int days = 1, start = a[0];
+    for (int i = 1; i < n; ++i) {
+        if (a[i] - start > x) { 
+            ++days;
+            start = a[i];
+        }
+    }
+    return days <= d;
+}
+
+int main() {
+    cin >> n >> d;
+    a.resize(n);
+    for (int i = 0; i < n; ++i)
+        cin >> a[i];
+    sort(a.begin(), a.end());
+
+    int lo = 0, hi = a[n - 1] - a[0];
+    while (lo < hi) {
+        int mid = (lo + hi) / 2;
+        if (ok(mid)) hi = mid;
+        else lo = mid + 1;
+    }
+    cout << lo << endl;
+}
+
+///3///
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, k, l, sum;
+    cin >> n >> k >> l;
+    vector<int> cost(n);
+    for (int i = 0; i < n; ++i)
+        cin >> cost[i];
+    
+    sort(cost.begin(), cost.end(), greater<long long>());
+    int left = k;
+    for (int i = 0; (i < n and left > 0); ++i){
+        int take = min(l, left);
+        sum += take * cost[i];
+        left -= take;
+    }
+    cout << sum << endl;
+    
+    return 0;
+}
+
+///4///
+
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<vector<char>> g(n, vector<char>(m));
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j)
+            cin >> g[i][j];
+
+    if (g[0][0] == '1') {
+        cout << -1 << endl;
+        return 0;
+    }
+
+    vector<vector<bool>> seen(n, vector<bool>(m, false));
+    queue<pair<int, int>> q;
+    q.push({0, 0});
+    seen[0][0] = true;
+
+    int pdf = 0;
+    bool exitFound = false;
+    int dx[] = {1, -1, 0, 0};
+    int dy[] = {0, 0, 1, -1};
+
+    while (!q.empty()) {
+        auto [x, y] = q.front();
+        q.pop();
+
+        if (g[x][y] == 'P') ++pdf;
+        if (g[x][y] == 'E') exitFound = true;
+
+        for (int k = 0; k < 4; ++k) {
+            int nx = x + dx[k], ny = y + dy[k];
+            if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
+            if (seen[nx][ny] || g[nx][ny] == '1') continue;
+            seen[nx][ny] = true;
+            q.push({nx, ny});
+        }
+    }
+
+    cout << (exitFound ? pdf : -1) << endl;
+    return 0;
+}
