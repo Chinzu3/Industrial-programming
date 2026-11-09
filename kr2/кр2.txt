@@ -1,0 +1,60 @@
+///1///
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double f(int x, int k){
+    if (k == 0) return 1;
+    if (k % 2 == 0){
+        double half = f(x, k / 2);
+        return half * half;
+    }else
+        return x * f(x, k - 1);
+}
+
+int main() {
+    int b, a;
+    cin >> a >> b;
+    cout << f(a, b) << endl;
+    return 0;
+}
+
+///2///
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+double NOD(int a, int b){
+    if (a == 0 or b == 0) return a + b;
+    if (a > b) return NOD(a - b, b);
+    else return NOD(a, b - a);
+}
+
+int main() {
+    int x, y;
+    cin >> x >> y;
+    cout << NOD(x, y) << endl;
+    return 0;
+}
+
+///3///
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void hanoi(int n, int from, int to, int v){
+    if (n == 0) return;
+    hanoi(n - 1, from, v, to);
+    cout << "Ingredient " << n << " move from " << from << " to " << to << endl;
+    hanoi(n - 1, v, to, from);
+}
+
+int main() {
+    int n;
+    cin >> n;
+    hanoi(n, 1, 3, 2);
+    return 0;
+}
