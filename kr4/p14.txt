@@ -1,0 +1,121 @@
+///1///
+#include <iostream>
+#include <stack>
+using namespace std;
+
+int main() {
+    string n;
+    cin >> n;
+    stack<char> st;
+    for (char i: n){
+        if (i == '(')
+            st.push(i);
+        else if (i == ')'){
+            if (st.empty()){
+                cout << "no";
+                return 0;
+            }
+            st.pop();
+        }
+    }
+    if (st.empty())
+        cout << "yes";
+    else
+        cout << "no";
+    return 0;
+}
+
+///2///
+
+#include <iostream>
+#include <string>
+#include <set>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string s, word;
+    getline(cin, s);
+    for (char &c: s){
+        c = tolower((unsigned char)c);
+        if (ispunct((unsigned char)c))
+            c = ' ';
+    }
+    
+    set<string> words;
+    stringstream ss(s);
+    
+    while (ss >> word)
+        words.insert(word);
+        
+    for (string w: words)
+        cout << w << endl;
+    return 0;
+}
+
+///3///
+
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int value;
+    int minValue;
+    Node* next;
+};
+
+class MinStack {
+private:
+    Node* top;
+public:
+    MinStack() {
+        top = nullptr;
+    }
+    
+    void push(int x){
+        Node* p = new Node;
+        p->value = x;
+        if (top == nullptr)
+            p->minValue = x;
+        else
+            p->minValue = min(x, top->minValue);
+        p->next = top;
+        top = p;
+    }
+    
+    void pop(){
+        if (empty())
+            return;
+        
+        Node* p = top;
+        top = top->next;
+        delete p;
+        
+    }
+    
+    bool empty(){
+        return top == nullptr;
+    }
+    
+    int getMin(){
+        if (empty())
+            return -1;
+        return top->minValue;
+    }
+};
+
+int main() {
+    MinStack s;
+    
+    s.push(5);
+    s.push(3);
+    s.push(7);
+    s.push(2);
+    
+    cout << s.getMin() << endl;
+    
+    s.pop();
+    
+    cout << s.getMin() << endl;
+    return 0;
+}
